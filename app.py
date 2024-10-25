@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from models import db, User, Race
 import json, os
 import csv
+from flask_session import Session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash  # At the top of app.py
 from werkzeug.security import check_password_hash  # Also import check_password_hash if not already
@@ -13,7 +14,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 db.init_app(app)
 app.secret_key = "ureiqshyeiogveysogvweyrgvbeorvbehoqrvbhqervbhqewugfyewqtgr643tr5629341tr781023trygfugcfgyue7t91f1gtgte"
-
+app.config['PERMANENT_SESSION_LIFETIME'] = 1800
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 with app.app_context():
     db.create_all()  # Initialize the database
 
@@ -39,6 +42,7 @@ def login():
         # Validate the password
         if user and user.check_password(password):
             login_user(user)
+            session["name"] = username
             return redirect(url_for('index'))  # Redirect to homepage after successful login
         else:
             return "Invalid username or password."  # Show an error message if invalid
@@ -50,6 +54,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    session["name"] = None
     return redirect(url_for('index'))
 
 
@@ -144,4 +149,4 @@ def register():
     return render_template('register.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
