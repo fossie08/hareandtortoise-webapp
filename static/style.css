@@ -1,0 +1,169 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Variables for Light and Dark Modes */
+:root {
+    --background-color-light: #f3f4f6;
+    --text-color-light: #333;
+    --accent-color-light: #0066cc;
+    --background-color-dark: #1e1e1e;
+    --text-color-dark: #f5f5f5;
+    --accent-color-dark: #66d9ff;
+}
+
+body.light-mode {
+    --background-color: var(--background-color-light);
+    --text-color: var(--text-color-light);
+    --accent-color: var(--accent-color-light);
+}
+
+body.dark-mode {
+    --background-color: var(--background-color-dark);
+    --text-color: var(--text-color-dark);
+    --accent-color: var(--accent-color-dark);
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+/* Button */
+button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 1em;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: darken(var(--accent-color), 10%);
+}
+
+/* Loading Screen */
+#loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.5s;
+    visibility: visible;
+}
+
+#loading-screen.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Light/Dark Mode Toggle */
+#theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* User Profile Page Styles */
+.profile {
+    padding: 20px;
+    background: var(--background-color);
+    border-radius: 8px;
+}
+
+ul, li {
+    list-style: none;
+    margin: 5px 0;
+}
+
+
+/* General table styling */
+table.race-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table.race-table th, table.race-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table.race-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+table.race-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.race-table tr:hover {
+    background-color: #ddd;
+}
+
+table.race-table td {
+    font-size: 14px;
+}
+
+/* Optional: Adjust typography and layout */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}

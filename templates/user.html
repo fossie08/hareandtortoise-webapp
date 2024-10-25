@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+    <h1>{{ user.username }}'s Profile</h1>
+    <h2>Races</h2>
+
+    <table class="race-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Place</th>
+                <th>Score</th>
+                <th>Total Distance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for race in races %}
+            <tr>
+                <td>{{ race.date }}</td>
+                <td>{{ race.get_player_place(user.uuid) }}</td> <!-- Assuming this gets the player's place -->
+                <td>{{ race.get_player_score(user.uuid) }}</td> <!-- Assuming this gets the player's score -->
+                <td>{{ race.get_player_total_distance(user.uuid) }}</td> <!-- Assuming this gets the total distance -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
