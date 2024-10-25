@@ -6,6 +6,11 @@
 {% block content %}
     <h1>Welcome to the Hare & Tortoise Race App</h1>
     <p>Upload race simulation files, view profiles, and more.</p>
+    <form action="{{ url_for('search_users') }}" method="get">
+        <input type="text" name="query" placeholder="Search users" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    
     <ul>
       {% for user in users %}
         <li><a href="{{ url_for('user_profile', username=user.username) }}">{{ user.username }}</a></li>

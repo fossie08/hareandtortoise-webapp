@@ -11,9 +11,38 @@
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen">Loading...</div>
+    <!-- Add this in templates/base.html, above the main content container -->
+<nav class="menubar">
+    <a href="{{ url_for('index') }}">Home</a>
+    {% if 'username' in session %}
+        <a href="{{ url_for('user_profile', username=session['username']) }}">Profile</a>
+        <a href="{{ url_for('upload_file') }}">Upload</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+</nav>
+
+<style>
+    .menubar {
+        background-color: #333;
+        padding: 10px;
+        color: white;
+    }
+    .menubar a {
+        color: white;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+    .menubar a:hover {
+        color: #ccc;
+    }
+</style>
 
     <!-- Theme Toggle Button -->
     <button id="theme-toggle">Toggle Theme</button>
+    <button><a href="/register">Register</a></button>
 
     <!-- Main Content Container -->
     <div class="container">

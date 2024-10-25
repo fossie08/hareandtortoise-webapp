@@ -6,24 +6,39 @@
     <h1>{{ user.username }}'s Profile</h1>
     <h2>Races</h2>
 
-    <table class="race-table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Place</th>
-                <th>Score</th>
-                <th>Total Distance</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for race in races %}
-            <tr>
-                <td>{{ race.date }}</td>
-                <td>{{ race.get_player_place(user.uuid) }}</td> <!-- Assuming this gets the player's place -->
-                <td>{{ race.get_player_score(user.uuid) }}</td> <!-- Assuming this gets the player's score -->
-                <td>{{ race.get_player_total_distance(user.uuid) }}</td> <!-- Assuming this gets the total distance -->
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="accordion" id="raceAccordion">
+        {% for race in races %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ race.id }}">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ race.id }}" aria-expanded="true" aria-controls="collapse{{ race.id }}">
+                    Race on {{ race.date }}
+                </button>
+            </h2>
+            <div id="collapse{{ race.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ race.id }}" data-bs-parent="#raceAccordion">
+                <div class="accordion-body">
+                    <table class="race-table">
+                        <thead>
+                            <tr>
+                                <th>UUID</th>
+                                <th>Place</th>
+                                <th>Score</th>
+                                <th>Total Distance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for player in race.get_players() %}
+                            <tr>
+                                <td>{{ player.uuid }}</td>
+                                <td>{{ player.place }}</td>
+                                <td>{{ player.score }}</td>
+                                <td>{{ player.total_distance }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}
