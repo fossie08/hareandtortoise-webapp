@@ -135,16 +135,11 @@ table.race-table th, table.race-table td {
 }
 
 table.race-table th {
-    background-color: #f2f2f2;
     font-weight: bold;
 }
 
-table.race-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
 table.race-table tr:hover {
-    background-color: #ddd;
+    background-color: #727272;
 }
 
 table.race-table td {

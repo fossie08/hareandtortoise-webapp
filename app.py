@@ -8,12 +8,16 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from werkzeug.security import generate_password_hash  # At the top of app.py
 from werkzeug.security import check_password_hash  # Also import check_password_hash if not already
 
+import random
+import string
+import secrets
+num = 100
 
 app = Flask(__name__)
+app.secret_key = ''.join(secrets.choice(string.ascii_letters + string.digits + string.punctuation) for x in range(num))  
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 db.init_app(app)
-app.secret_key = "ureiqshyeiogveysogvweyrgvbeorvbehoqrvbhqervbhqewugfyewqtgr643tr5629341tr781023trygfugcfgyue7t91f1gtgte"
 app.config['PERMANENT_SESSION_LIFETIME'] = 1800
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -99,14 +103,16 @@ def parse_simulation_file(file_path):
                 "total_distance": float(row["Total Distance"]),
                 "rounds": int(row["Rounds"]),
                 "date": row["Date"],
-                "time": row["Time"]
+                "time": row["Time"],
+                "name": row["Name"]
             }
             players.append(player_data)
     
     # Extract date and time from the first entry (as the race date)
     race_date = players[0]["date"] if players else "Unknown"
-    
-    return {"date": race_date, "players": players}
+    race_time = players[0]["time"] if players else "Unknown"
+    race_distance = players[0]["total_distance"] if players else "Unknown"
+    return {"date": race_date, "time": race_time, "distance": race_distance, "players": players}
 
 
 # User profile
@@ -147,6 +153,18 @@ def register():
         return redirect(url_for('index'))
 
     return render_template('register.html')
+
+def read_animal_data(file_path):
+    animals = []
+    try:
+        with open(file_path, 'r') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                animals.append({'name': row['Name'], 'uuid': row['UUID']})
+    except Exception as e:
+        print(f"Error reading animal data: {e}")
+    return animals
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")

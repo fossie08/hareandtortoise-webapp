@@ -37,6 +37,7 @@ class User(db.Model, UserMixin):  # Inherit from UserMixin
 class Race(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(50))
+    
     players = db.Column(db.Text)  # JSON formatted players data
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 

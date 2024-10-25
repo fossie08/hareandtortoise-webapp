@@ -10,28 +10,31 @@
         {% for race in races %}
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading{{ race.id }}">
+                Race ID {{ race.id }} on {{ race.date }}<!-- at {{ race.time }} for a distance of {{ race.distance }}m-->
+                <!--
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ race.id }}" aria-expanded="true" aria-controls="collapse{{ race.id }}">
                     Race on {{ race.date }}
                 </button>
+            -->
             </h2>
             <div id="collapse{{ race.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ race.id }}" data-bs-parent="#raceAccordion">
                 <div class="accordion-body">
                     <table class="race-table">
                         <thead>
                             <tr>
+                                <th>Name</th>
                                 <th>UUID</th>
                                 <th>Place</th>
                                 <th>Score</th>
-                                <th>Total Distance</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for player in race.get_players() %}
                             <tr>
+                                <td>{{ player.name }}</td>
                                 <td>{{ player.uuid }}</td>
                                 <td>{{ player.place }}</td>
                                 <td>{{ player.score }}</td>
-                                <td>{{ player.total_distance }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
